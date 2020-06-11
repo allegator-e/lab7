@@ -1,0 +1,426 @@
+May 30, 2020 4:13:43 AM TCPServer.TCPServerConnect main
+SEVERE: Путь до файла xml нужно передать через аргумент командной строки.
+May 30, 2020 4:14:39 AM TCPServer.CollectionManager <init>
+SEVERE: Файл по указанному пути не существует.
+May 30, 2020 4:15:51 AM TCPServer.CollectionManager <init>
+SEVERE: Файл по указанному пути не существует.
+May 30, 2020 5:03:46 PM TCPServer.CollectionManager <init>
+SEVERE: Файл по указанному пути не существует.
+Jun 03, 2020 12:11:00 AM TCPServer.CollectionManager <init>
+SEVERE: Файл по указанному пути не существует.
+Jun 03, 2020 12:12:53 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:12:53 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:13:33 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 12:16:02 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:16:03 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:16:35 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:16:36 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:17:04 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 12:21:42 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:21:42 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:21:52 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 12:21:55 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 12:32:10 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:32:11 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:32:20 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 12:33:02 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 12:35:07 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:35:08 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:35:15 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 12:35:46 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 12:39:19 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:39:19 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:39:31 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 12:40:50 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:40:50 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:41:09 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 12:54:34 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 12:54:34 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 12:54:47 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 12:55:20 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 1:00:51 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 1:00:51 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 1:01:10 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 1:06:54 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 1:06:54 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 1:07:12 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 1:08:37 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 1:08:37 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 1:08:54 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 1:10:57 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 1:10:57 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 1:11:19 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 1:12:36 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 1:12:36 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 1:12:56 AM TCPServer.Server main
+SEVERE: Возникла проблема во время работы программы. Все плохо... 
+Jun 03, 2020 1:21:18 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 1:21:18 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 5 элементов.
+Jun 03, 2020 1:21:42 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:22:01 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:22:34 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:23:31 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:23:36 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:24:54 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:24:58 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:26:43 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:26:44 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:26:44 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:26:45 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:26:46 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:26:47 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:26:47 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 1:27:34 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 2:03:46 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 2:03:46 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 03, 2020 2:04:03 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 03, 2020 2:04:03 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 2:05:42 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 2:05:43 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 03, 2020 2:05:54 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 03, 2020 2:05:54 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 03, 2020 2:06:46 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 03, 2020 2:06:46 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:06:12 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:06:13 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:06:24 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:06:24 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:06:28 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:06:28 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:10:43 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:10:43 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:10:45 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:10:45 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:10:49 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:10:49 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:14:05 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:14:06 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:14:29 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:14:29 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:14:32 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:14:32 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:14:38 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:14:38 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:20:21 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:20:21 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:20:31 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:20:31 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:20:41 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:20:41 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:23:26 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:23:26 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:23:42 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:23:42 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:23:51 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:23:51 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:23:53 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:23:53 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:23:57 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:23:57 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:26:52 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:26:52 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:26:59 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:26:59 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:27:01 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:27:01 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:27:05 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:27:05 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:28:48 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:28:48 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:28:51 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:28:51 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:28:58 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:28:58 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:29:02 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:29:02 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:29:03 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:29:03 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:29:04 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:29:04 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:29:05 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:29:05 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:29:07 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:29:07 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:21 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:31:21 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:31:29 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:29 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:33 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:33 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:35 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:35 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:36 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:36 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:37 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:37 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:38 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:38 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:39 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:39 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:39 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:39 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:48 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:48 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:50 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:50 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:31:54 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:31:54 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:35:11 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:35:11 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:35:38 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:35:38 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:35:42 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:35:42 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:35:46 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:35:46 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:40:05 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 1:40:05 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 1:40:31 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:40:31 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:41:10 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:41:10 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 1:41:14 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 1:41:14 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:01:23 AM TCPServer.CollectionManager load
+INFO: Идёт загрузка коллекции C:\Users\Hannah\Desktop\proga\2 sem\lab_6\lab_6_Server\Collection.xml
+Jun 06, 2020 2:01:24 AM TCPServer.CollectionManager load
+INFO: Коллекция успешно загружена. Добавлено 6 элементов.
+Jun 06, 2020 2:01:29 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:01:29 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:02:07 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:02:07 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:02:11 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:02:11 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:02:22 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:02:22 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:03:55 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:03:55 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:10 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:11 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:11 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:11 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:25 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:25 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:04:29 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:04:29 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:05:04 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:05:04 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:05:41 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:05:41 AM TCPServer.Server main
+INFO: Окончание соединения.
+Jun 06, 2020 2:06:55 AM TCPServer.Server main
+INFO: Установлено соединение
+Jun 06, 2020 2:06:55 AM TCPServer.Server main
+INFO: Окончание соединения.

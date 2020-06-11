@@ -1,0 +1,5 @@
+history
+execute_script script.txt
+show
+history
+insert 100

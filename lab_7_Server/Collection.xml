@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flats>
+  <Flat key="0">
+    <id>6377</id>
+    <name>GANNA</name>
+    <Coordinates>
+      <x>183.0</x>
+      <y>72</y>
+    </Coordinates>
+    <creationDate>2020-05-27T23:53:46.178</creationDate>
+    <area>34</area>
+    <numberOfRooms>5</numberOfRooms>
+    <furnish>null</furnish>
+    <view>null</view>
+    <transport>LITTLE</transport>
+    <House>
+      <name>SAVON</name>
+      <year>19</year>
+      <numberOfFloors>6</numberOfFloors>
+      <numberOfFlatsOnFloor>9</numberOfFlatsOnFloor>
+    </House>
+  </Flat>
+  <Flat key="56">
+    <id>6378</id>
+    <name>allegator_e</name>
+    <Coordinates>
+      <x>12.0</x>
+      <y>11</y>
+    </Coordinates>
+    <creationDate>2020-05-27T23:53:57.227</creationDate>
+    <area>10</area>
+    <numberOfRooms>15</numberOfRooms>
+    <furnish>DESIGNER</furnish>
+    <view>PARK</view>
+    <transport>NORMAL</transport>
+    <House>
+      <name>le</name>
+      <year>19</year>
+      <numberOfFloors>5</numberOfFloors>
+      <numberOfFlatsOnFloor>3</numberOfFlatsOnFloor>
+    </House>
+  </Flat>
+  <Flat key="100">
+    <id>6381</id>
+    <name>Hannah</name>
+    <Coordinates>
+      <x>1.0</x>
+      <y>1</y>
+    </Coordinates>
+    <creationDate>2020-06-03T01:27:33.566</creationDate>
+    <area>1</area>
+    <numberOfRooms>1</numberOfRooms>
+    <furnish>FINE</furnish>
+    <view>STREET</view>
+    <transport>NONE</transport>
+    <House>
+      <name>little_kitten</name>
+      <year>19</year>
+      <numberOfFloors>12</numberOfFloors>
+      <numberOfFlatsOnFloor>12</numberOfFlatsOnFloor>
+    </House>
+  </Flat>
+  <Flat key="100500">
+    <id>6379</id>
+    <name>SuperFlat</name>
+    <Coordinates>
+      <x>1.23456794E9</x>
+      <y>234</y>
+    </Coordinates>
+    <creationDate>2020-05-27T23:55:07.920</creationDate>
+    <area>23456789</area>
+    <numberOfRooms>34</numberOfRooms>
+    <furnish>DESIGNER</furnish>
+    <view>PARK</view>
+    <transport>ENOUGH</transport>
+    <House>
+      <name>Super</name>
+      <year>3</year>
+      <numberOfFloors>10</numberOfFloors>
+      <numberOfFlatsOnFloor>3</numberOfFlatsOnFloor>
+    </House>
+  </Flat>
+</Flats>

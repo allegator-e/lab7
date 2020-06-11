@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: TCPServer.Server
+Class-Path: lib/jdom2-2.0.6.jar
+

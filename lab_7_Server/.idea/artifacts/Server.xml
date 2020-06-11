@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Server">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="Server.jar">
+      <element id="module-output" name="lab_6_Server" />
+      <element id="library" level="project" name="org.jdom:jdom2:2.0.6" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
