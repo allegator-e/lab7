@@ -36,13 +36,11 @@ public class TCPClientConnect {
             Autorization autorization = new Autorization(hostName, port);
             ArrayList<String> login_and_password = autorization.access();
             String[] command;
-            System.out.print(">>");
-            command = commandReader.nextLine().trim().split(" ");
             while (true) {
                 try {
                     TCPSender sender = new TCPSender(hostName, port, true, login_and_password);
-                    Thread.sleep(500);
-                    //command = new String[]{"show"};
+                    System.out.print(">>");
+                    command = commandReader.nextLine().trim().split(" ");
                     if (command[0].equals("exit")) {
                         System.exit(1);
                     } else {
@@ -52,8 +50,6 @@ public class TCPClientConnect {
                     System.out.println("Подключение к серверу невозможно");
                 } catch (InputMismatchException e) {
                     System.out.println("Команда введена некорректно. Введите help.");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         }catch (IOException e) {
