@@ -25,11 +25,20 @@ public class TCPSender {
     private Transport transport;
     private Socket socket;
     private String hostname;
+    private boolean access;
+    private ArrayList<String> login_and_password;
     private int port;
     private ArrayList<File> scripts = new ArrayList<>();
 
-    public TCPSender(String hostname, int port) {
-        this.hostname = hostname; this.port = port;
+    public TCPSender(String hostname, int port, boolean access, ArrayList<String> login_and_password) {
+        this.hostname = hostname;
+        this.port = port;
+        this.access = access;
+        this.login_and_password = login_and_password;
+    }
+
+    public boolean isAccess() {
+        return access;
     }
 
     public boolean checker(String[] command) throws IOException {
@@ -107,6 +116,8 @@ public class TCPSender {
     private void sender(Object object, Object argument){
         try {
             ArrayList <Object> list_object = new ArrayList<>();
+            list_object.add(access);
+            list_object.add(login_and_password);
             list_object.add(object);
             list_object.add(argument);
             socket = new Socket(hostname, port);
@@ -118,7 +129,7 @@ public class TCPSender {
             oos.close();
             baos.close();
             TCPReceiver receiver = new TCPReceiver(socket);
-            receiver.receiver();
+            access = receiver.receiver();
             socket.close();
         }catch (IOException e){
             System.out.println("Проблемы с передачей на сервер...");

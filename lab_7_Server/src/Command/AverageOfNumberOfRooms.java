@@ -15,10 +15,10 @@ public class AverageOfNumberOfRooms extends Command {
     }
 
     @Override
-    public String execute(Object args) {
+    public synchronized String execute(Object args) {
         TreeMap<Integer, Flat> houses = getManager().getHouses();
         if (houses.size() != 0) {
-            return "Среднее значение поля numberOfRooms для всех элементов коллекции: " + houses.values().stream()
+            return "Среднее значение поля numberOfRooms для всех элементов коллекции: " + houses.values().parallelStream()
                     .mapToInt(flat -> flat.getNumberOfRooms())
                     .sum() / houses.size();
         } return "В коллекции отсутствуют элементы. Выполнение команды не возможно.";

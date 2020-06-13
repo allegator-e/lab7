@@ -9,31 +9,31 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.Callable;
 
 public class TCPServerReceiver implements Callable<Object> {
-    private final SelectionKey key;
+    private SelectionKey key;
     private Object o;
     private ByteBuffer buffer = ByteBuffer.allocate(4096);
+
     public TCPServerReceiver(SelectionKey key) {
         this.key =key;
     };
+
     @Override
     public Object call() throws IOException, ClassNotFoundException {
-        synchronized (key) {
-            SocketChannel socketChannel = (SocketChannel) key.channel();
-            int count = socketChannel.read(buffer);
-            if (count > -1) {
-                byte[] bytes = buffer.array();
-                ByteArrayInputStream baos = new ByteArrayInputStream(bytes);
-                ObjectInputStream ois = new ObjectInputStream(baos);
-                o = ois.readObject();
-                ois.close();
-                baos.close();
-                buffer.clear();
-                key.interestOps(SelectionKey.OP_WRITE);
-            }
-            if (count == -1) {
-                key.cancel();
-            }
-            return o;
+        SocketChannel socketChannel = (SocketChannel) key.channel();
+        int count = socketChannel.read(buffer);
+        if (count > -1) {
+            byte[] bytes = buffer.array();
+            ByteArrayInputStream baos = new ByteArrayInputStream(bytes);
+            ObjectInputStream ois = new ObjectInputStream(baos);
+            o = ois.readObject();
+            ois.close();
+            baos.close();
+            buffer.clear();
+            key.interestOps(SelectionKey.OP_WRITE);
         }
+        if (count == -1) {
+            key.cancel();
+        }
+        return o;
     }
 }

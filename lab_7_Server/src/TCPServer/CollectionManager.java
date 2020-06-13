@@ -7,6 +7,9 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+
+import java.sql.*;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
@@ -15,25 +18,16 @@ import java.util.*;
 
 public class CollectionManager {
     private TreeMap<Integer, Flat> houses = new TreeMap<>();
-    private String collectionPath;
-    private File xmlCollection;
+    private Connection connection;
     private Date initDate;
     private Integer nowId;
     static Logger LOGGER;
-    private static java.util.logging.LogManager LogManager;
     static {
         LOGGER = Logger.getLogger(CollectionManager.class.getName());
     }
 
-    public CollectionManager(String collectionPath)  {
-        File file = new File(collectionPath);
-        if (file.exists()) {
-            this.xmlCollection = file;
-            this.collectionPath = collectionPath;
-        } else {
-            LOGGER.log(Level.SEVERE, "Файл по указанному пути не существует.");
-            System.exit(1);
-        }
+    public CollectionManager(Connection connection)  {
+        this.connection = connection;
         this.load();
         this.initDate = new Date();
     }
@@ -48,6 +42,7 @@ public class CollectionManager {
     /**
      * Сериализует коллекцию в файл json.
      */
+    /*
     public void save() {
         try  {
             Document doc = new Document();
@@ -89,71 +84,49 @@ public class CollectionManager {
         } catch (IOException ex) {
            LOGGER.log(Level.SEVERE,"Коллекция не может быть записана в файл");
         }
-    }
+    } */
 
     /**
      *  Десериализует коллекцию из файла json.
      */
     public void load() {
         int beginSize = houses.size();
-        if (!xmlCollection.exists()) {
-            LOGGER.log(Level.SEVERE, "Файла по указанному пути не существует.");
-            System.exit(1);
-        } else if (!xmlCollection.canRead() || !xmlCollection.canWrite()) {
-            LOGGER.log(Level.SEVERE, "Файл защищён от чтения и/или записи. Для работы программы нужны оба разрешения.");
-            System.exit(1);
-        } else {
-            if (xmlCollection.length() == 0) {
-                LOGGER.log(Level.SEVERE, "Файл пуст.");
-                System.exit(1);
+        LOGGER.log(Level.INFO, "Идёт загрузка коллекции ");
+        try  {
+            //System.out.println(stat.execute("DELETE FROM users *"));
+            //System.out.println(stat.execute("CREATE SEQUENCE sequence_id"));
+            //System.out.println(stat.execute("DROP TABLE flats"));
+            //System.out.println(stat.execute("CREATE TABLE flats (key INT UNIQUE , id INT PRIMARY KEY, name VARCHAR(256) NOT NULL, Coordinates_x FLOAT, Coordinates_y INT, creationDate TIMESTAMP, numberOfRooms INT, furnish VARCHAR(10), view VARCHAR(10), transport VARCHAR(10) NOT NULL, House_name VARCHAR(256) NOT NULL, House_year INT, House_numberOfFloors INT, House_numberOfFlatsOnFloor INT, user_id INT REFERENCES users (id))"));
+            //System.out.println(stat.execute("INSERT INTO users VALUES(nextval('sequence_user_id'), 'Luna', '1234', 'ophtj')"));
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM flats");
+            while (resultSet.next()) {
+                Integer key = resultSet.getInt("key");
+                Integer id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                float x = resultSet.getFloat("Coordinates_x");
+                long y = resultSet.getInt("Coordinates_y");
+                LocalDateTime creationDate = resultSet.getTimestamp("creationDate").toLocalDateTime();
+                long area = resultSet.getInt("area");
+                Integer numberOfRooms = resultSet.getInt("numberOfRooms");
+                Furnish furnish = null;
+                String furnish_s = resultSet.getString("furnish");
+                if (!furnish_s.equals("null")) furnish = Furnish.valueOf(furnish_s);
+                View view = null;
+                String view_s = resultSet.getString("view");
+                if (!view_s.equals("null")) view = View.valueOf(view_s);
+                Transport transport = Transport.valueOf(resultSet.getString("transport"));
+                String nameHouse = resultSet.getString("House_name");
+                int year = resultSet.getInt("House_year");
+                int numberOfFloors = resultSet.getInt("House_numberOfFloors");
+                long numberOfFlatsOnFloor = resultSet.getInt("House_numberOfFlatsOnFloor");
+                houses.put(key, new Flat(id, name, new Coordinates(x, y), creationDate, area, numberOfRooms, furnish, view, transport, new House(nameHouse, year, numberOfFloors, numberOfFlatsOnFloor)));
             }
-            LOGGER.log(Level.INFO, "Идёт загрузка коллекции " + xmlCollection.getAbsolutePath());
-            // мы можем создать экземпляр JDOM Document из классов DOM, SAX и STAX Builder
-            try {
-                org.jdom2.Document jdomDocument = createJDOMusingSAXParser(collectionPath);
-                Element root = jdomDocument.getRootElement();
-                // получаем список всех элементов
-                List<Element> labWorkListElements = root.getChildren("Flat");
-                // список объектов Student, в которых будем хранить
-                // считанные данные по каждому элементу
-                Integer maxId = 0;
-                for (Element lab : labWorkListElements) {
-                    Integer key = Integer.parseInt(lab.getAttributeValue("key"));
-                    Integer id = Integer.parseInt(lab.getChildText("id"));
-                    if (id > maxId) maxId = id;
-                    String name = lab.getChildText("name");
-                    List<Element> lab_c = lab.getChildren("Coordinates");
-                    float x = Float.parseFloat(lab_c.get(0).getChildText("x"));
-                    Long y = Long.parseLong(lab_c.get(0).getChildText("y"));
-                    LocalDateTime creationDate = LocalDateTime.parse(lab.getChildText("creationDate"));
-                    long area = Long.parseLong(lab.getChildText("area"));
-                    Integer numberOfRooms = Integer.parseInt(lab.getChildText("numberOfRooms"));
-                    Furnish furnish = null;
-                    String furnish_s = lab.getChildText("furnish");
-                    if (!furnish_s.equals("null")) furnish = Furnish.valueOf(furnish_s);
-                    View view = null;
-                    String view_s = lab.getChildText("view");
-                    if (!view_s.equals("null")) view = View.valueOf(view_s);
-                    Transport transport = Transport.valueOf(lab.getChildText("transport"));
-                    List<Element> lab_d = lab.getChildren("House");
-                    String nameHouse = lab_d.get(0).getChildText("name");
-                    int year = Integer.parseInt(lab_d.get(0).getChildText("year"));
-                    int numberOfFloors = Integer.parseInt(lab_d.get(0).getChildText("numberOfFloors"));
-                    long numberOfFlatsOnFloor = Long.parseLong(lab_d.get(0).getChildText("numberOfFlatsOnFloor"));
-                    houses.put(key, new Flat(id, name, new Coordinates(x, y), creationDate, area, numberOfRooms, furnish, view, transport, new House(nameHouse, year, numberOfFloors, numberOfFlatsOnFloor)));
-                }
-                LOGGER.log(Level.INFO, "Коллекция успешно загружена. Добавлено " + (houses.size() - beginSize) + " элементов.");
-                nowId = maxId;
-            } catch (IOException | JDOMException ex) {
-                LOGGER.log(Level.SEVERE, "Коллекция не может быть загружена. Файл некорректен");
-                System.exit(1);
-            }
+            resultSet.close();
+            LOGGER.log(Level.INFO, "Коллекция успешно загружена. Добавлено " + (houses.size() - beginSize) + " элементов.");
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Коллекция не может быть загружена. Файл некорректен");
+            System.exit(1);
         }
-    }
-    private static org.jdom2.Document createJDOMusingSAXParser(String fileName)
-            throws JDOMException, IOException {
-        SAXBuilder saxBuilder = new SAXBuilder();
-        return saxBuilder.build(new File(fileName));
     }
 
     /**
@@ -172,7 +145,6 @@ public class CollectionManager {
         if (!(o instanceof CollectionManager)) return false;
         CollectionManager manager = (CollectionManager) o;
         return houses.equals(manager.houses) &&
-                xmlCollection.equals(manager.xmlCollection) &&
                 initDate.equals(manager.initDate);
     }
 

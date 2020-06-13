@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.channels.UnresolvedAddressException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -15,12 +16,12 @@ import java.util.Scanner;
  */
 public class TCPClientConnect {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         Scanner commandReader = new Scanner(System.in);
         System.out.print("Введите hostname:");
         try {
             String hostName = commandReader.nextLine();
-            Integer port = 0;
+            int port;
             while (true) {
                 try {
                     System.out.print("Введите порт:");
@@ -31,14 +32,17 @@ public class TCPClientConnect {
                 }
             }
             Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Работа программы завершена!")));
+
+            Autorization autorization = new Autorization(hostName, port);
+            ArrayList<String> login_and_password = autorization.access();
+            String[] command;
+            System.out.print(">>");
+            command = commandReader.nextLine().trim().split(" ");
             while (true) {
                 try {
+                    TCPSender sender = new TCPSender(hostName, port, true, login_and_password);
                     Thread.sleep(500);
-                    TCPSender sender = new TCPSender(hostName, port);
-                    String[] command;
-                    System.out.print(">>");
-                  //  command = commandReader.nextLine().trim().split(" ");
-                    command = new String[]{"show"};
+                    //command = new String[]{"show"};
                     if (command[0].equals("exit")) {
                         System.exit(1);
                     } else {
@@ -52,6 +56,8 @@ public class TCPClientConnect {
                     e.printStackTrace();
                 }
             }
+        }catch (IOException e) {
+            System.out.println("Подключение к серверу невозможно");
         }catch (UnresolvedAddressException e){
             System.out.println("Ошибка инициализации хоста.");
         }catch (NoSuchElementException e){

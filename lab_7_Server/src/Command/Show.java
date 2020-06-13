@@ -20,14 +20,14 @@ public class Show extends Command {
     }
 
     @Override
-    public String execute(Object args) {
+    public synchronized String execute(Object args) {
         TreeMap<Integer, Flat> houses = getManager().getHouses();
         String s = "";
         if (houses.size() != 0) {
-            List<Map.Entry<Integer, Flat>> list = houses.entrySet().stream()
+            List<Map.Entry<Integer, Flat>> list = houses.entrySet().parallelStream()
                     .sorted(Comparator.comparing(element -> (element.getValue().getName())))
                     .collect(Collectors.toList());
-            return   list.stream()
+            return   list.parallelStream()
                     .map(element -> "key: " + element.getKey() + ", flat: " + element.getValue())
                     .collect(Collectors.joining("\n\n"));
         }

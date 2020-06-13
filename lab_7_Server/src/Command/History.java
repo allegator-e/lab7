@@ -14,7 +14,7 @@ public class History extends Command {
     }
 
     @Override
-    public String execute(Object args) {
+    public synchronized String execute(Object args) {
         ArrayList<String> history = (ArrayList<String>) args;
         if(!history.isEmpty()) {
             return String.join("\n", history);

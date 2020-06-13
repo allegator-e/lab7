@@ -16,12 +16,12 @@ public class GroupCountingByCreationDate extends Command {
     }
 
     @Override
-    public String execute(Object args) {
+    public synchronized String execute(Object args) {
         TreeMap<Integer, Flat> houses = getManager().getHouses();
         if (houses.size() != 0) {
-            Map<LocalDateTime, Long> creationDates = houses.values().stream()
+            Map<LocalDateTime, Long> creationDates = houses.values().parallelStream()
                     .collect(Collectors.groupingBy(Flat::getCreationDate, Collectors.counting()));
-            return creationDates.keySet().stream()
+            return creationDates.keySet().parallelStream()
                     .map(date -> date + ": " + creationDates.get(date))
                     .collect(Collectors.joining("\n"));
         } return "В коллекции отсутствуют элементы. Выполнение команды не возможно.";
