@@ -1,26 +1,16 @@
 package TCPServer;
 
 import Object.*;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-
 import java.sql.*;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.io.*;
+import java.util.logging.*;
 import java.time.*;
 import java.util.*;
 
 public class CollectionManager {
-    private TreeMap<Integer, Flat> houses = new TreeMap<>();
+    private final TreeMap<Integer, Flat> houses = new TreeMap<>();
     private Connection connection;
     private Date initDate;
-    private Integer nowId;
     static Logger LOGGER;
     static {
         LOGGER = Logger.getLogger(CollectionManager.class.getName());
@@ -32,62 +22,13 @@ public class CollectionManager {
         this.initDate = new Date();
     }
 
-    public Integer getNowId(){
-        return nowId++;
-    }
-
     public TreeMap<Integer, Flat> getHouses(){
         return houses;
     }
-    /**
-     * Сериализует коллекцию в файл json.
-     */
-    /*
-    public void save() {
-        try  {
-            Document doc = new Document();
-            // создаем корневой элемент с пространством имен
-            doc.setRootElement(new Element("Flats"));
-            // формируем JDOM документ из объектов Student
-            for (Integer key : houses.keySet()) {
-                Element element = new Element("Flat");
-                element.setAttribute("key", String.valueOf(key));
-                element.addContent(new Element("id").setText( String.valueOf(houses.get(key).getId())));
-                element.addContent(new Element("name").setText(houses.get(key).getName()));
-                Element element_c = new Element("Coordinates");
-                element_c.addContent(new Element("x").setText(String.valueOf(houses.get(key).getCoordinates().getX())));
-                element_c.addContent(new Element("y").setText(String.valueOf(houses.get(key).getCoordinates().getY())));
-                element.addContent(element_c);
-                element.addContent(new Element("creationDate").setText(String.valueOf(houses.get(key).getCreationDate())));
-                element.addContent(new Element("area").setText(String.valueOf(houses.get(key).getArea())));
-                element.addContent(new Element("numberOfRooms").setText(String.valueOf(houses.get(key).getNumberOfRooms())));
-                element.addContent(new Element("furnish").setText(String.valueOf(houses.get(key).getFurnish())));
-                element.addContent(new Element("view").setText(String.valueOf(houses.get(key).getView())));
-                element.addContent(new Element("transport").setText(String.valueOf(houses.get(key).getTransport())));
-                Element element_d = new Element("House");
-                element_d.addContent(new Element("name").setText(houses.get(key).getHouse().getName()));
-                element_d.addContent(new Element("year").setText(String.valueOf(houses.get(key).getHouse().getYear())));
-                element_d.addContent(new Element("numberOfFloors").setText(String.valueOf(houses.get(key).getHouse().getNumberOfFloors())));
-                element_d.addContent(new Element("numberOfFlatsOnFloor").setText(String.valueOf(houses.get(key).getHouse().getNumberOfFlatsOnFloor())));
-                element.addContent(element_d);
-                doc.getRootElement().addContent(element);
-            }
-            if (!xmlCollection.canWrite())
-                LOGGER.log(Level.WARNING, "Файл защищён от записи. Невозможно сохранить коллекцию.");
-            else{
-                // Документ JDOM сформирован и готов к записи в файл
-                XMLOutputter xmlWriter = new XMLOutputter(Format.getPrettyFormat());
-                // сохнаряем в файл
-                xmlWriter.output(doc, new FileOutputStream(xmlCollection));
-                LOGGER.log(Level.FINE, "Коллекция успешно сохранена в файл.");
-            }
-        } catch (IOException ex) {
-           LOGGER.log(Level.SEVERE,"Коллекция не может быть записана в файл");
-        }
-    } */
+
 
     /**
-     *  Десериализует коллекцию из файла json.
+     *  Полуение элементов коллекции из БД в локальную коллекцию.
      */
     public void load() {
         int beginSize = houses.size();

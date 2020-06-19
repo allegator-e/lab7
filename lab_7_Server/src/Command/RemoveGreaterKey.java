@@ -26,26 +26,26 @@ public class RemoveGreaterKey extends Command {
     }
 
     @Override
-    public synchronized String execute(Object args) {
+    public String execute(Object args) {
         Integer key = (Integer)args;
-        TreeMap<Integer, Flat> houses = getManager().getHouses();
-        if (houses.size() != 0) {
-            if (houses.keySet().stream().anyMatch(key_in_collection -> key_in_collection.compareTo(key) > 0)) {
-                try {
-                    PreparedStatement get_UserId = connection.prepareStatement("SELECT id FROM users WHERE login = ?");
-                    get_UserId.setString(1, login_and_password.get(0));
-                    ResultSet resultSet = get_UserId.executeQuery();
-                    resultSet.next();
-                    int user_id = resultSet.getInt("id");
-                    PreparedStatement statement = connection.prepareStatement("DELETE FROM flats WHERE key > ? AND user_id = ?");
-                    statement.setInt(1,key);
-                    statement.setInt(2, user_id);
-                    statement.execute();
-                    houses.keySet().parallelStream()
+        synchronized (getManager().getHouses()) {
+            if (getManager().getHouses().size() != 0) {
+                if (getManager().getHouses().keySet().stream().anyMatch(key_in_collection -> key_in_collection.compareTo(key) > 0)) {
+                    try {
+                        PreparedStatement get_UserId = connection.prepareStatement("SELECT id FROM users WHERE login = ?");
+                        get_UserId.setString(1, login_and_password.get(0));
+                        ResultSet resultSet = get_UserId.executeQuery();
+                        resultSet.next();
+                        int user_id = resultSet.getInt("id");
+                        PreparedStatement statement = connection.prepareStatement("DELETE FROM flats WHERE key > ? AND user_id = ?");
+                        statement.setInt(1, key);
+                        statement.setInt(2, user_id);
+                        statement.execute();
+                        getManager().getHouses().keySet().stream()
                                 .filter(key_in -> {
                                     try {
                                         PreparedStatement finalStatement = connection.prepareStatement("SELECT * FROM flats WHERE key = ?");
-                                        finalStatement.setInt(1,key_in);
+                                        finalStatement.setInt(1, key_in);
                                         ResultSet rs = finalStatement.executeQuery();
                                         return !rs.next();
                                     } catch (SQLException e) {
@@ -54,13 +54,14 @@ public class RemoveGreaterKey extends Command {
                                     }
                                 })
                                 .collect(Collectors.toSet())
-                                .forEach(houses::remove);
+                                .forEach(getManager().getHouses()::remove);
                         return "Команда успешно выполнена.";
-                }catch (SQLException e) {
-                    return("В коллекции не найдено ваших хором с этими ключами.");
+                    } catch (SQLException e) {
+                        return ("В коллекции не найдено ваших хором с этими ключами.");
+                    }
                 }
-            }
-            return("В коллекции не найдено ваших хором с этими ключами.");
-        } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+                return ("В коллекции не найдено ваших хором с этими ключами.");
+            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+        }
     }
 }

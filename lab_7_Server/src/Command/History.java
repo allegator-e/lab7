@@ -14,11 +14,10 @@ public class History extends Command {
     }
 
     @Override
-    public synchronized String execute(Object args) {
+    public String execute(Object args) {
         ArrayList<String> history = (ArrayList<String>) args;
-        if(!history.isEmpty()) {
-            return String.join("\n", history);
-        }
+        if(!history.isEmpty())
+                return String.join("\n", history);
         return "";
     }
 

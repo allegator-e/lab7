@@ -22,7 +22,7 @@ public class Insert extends Command {
     }
 
     @Override
-    public synchronized String execute(Object args) {
+    public String execute(Object args) {
         try {
             Flat flat = (Flat) args;
             if (getManager().getHouses().containsKey(key))
@@ -50,6 +50,7 @@ public class Insert extends Command {
             statement.execute();
             statement = connection.prepareStatement("SELECT id FROM flats WHERE key = ?");
             statement.setInt(1, key);
+            resultSet.close();
             resultSet = statement.executeQuery();
             resultSet.next();
             flat.setId(resultSet.getInt("id"));
@@ -57,6 +58,7 @@ public class Insert extends Command {
             resultSet.close();
             return "Элемент добавлен.";
         } catch (SQLException e) {
+                e.printStackTrace();
                 return "Чё-то не получилось, чё-то не считалось... Сорян, ну чё";
         }
     }

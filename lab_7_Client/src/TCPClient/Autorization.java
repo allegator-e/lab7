@@ -29,6 +29,10 @@ public class Autorization {
             login_and_password.clear();
             System.out.print("Логин: ");
             login = console.readLine();
+            if (login.equals("")) {
+                System.out.println("Логин не корректный...");
+                continue;
+            }
             System.out.print("Пароль: ");
             passwd = "" + new String(console.readPassword());
             login_and_password.add(login);

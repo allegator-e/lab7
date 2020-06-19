@@ -26,8 +26,7 @@ public class Clear extends Command{
     }
 
     @Override
-    public synchronized String execute(Object args) {
-        TreeMap<Integer, Flat> houses = getManager().getHouses();
+    public String execute(Object args) {
         try {
             PreparedStatement get_UserId = connection.prepareStatement("SELECT id FROM users WHERE login = ?");
             get_UserId.setString(1, login_and_password.get(0));
@@ -37,22 +36,23 @@ public class Clear extends Command{
             PreparedStatement statement = connection.prepareStatement("DELETE FROM flats WHERE user_id = ?");
             statement.setInt(1, user_id);
             statement.execute();
-
-            houses.keySet().parallelStream()
-                    .filter(key_in -> {
-                        try {
-                            PreparedStatement finalStatement = connection.prepareStatement("SELECT * FROM flats WHERE key = ?");
-                            finalStatement.setInt(1,key_in);
-                            ResultSet rs = finalStatement.executeQuery();
-                            return !rs.next();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                            return true;
-                        }
-                    })
-                    .collect(Collectors.toSet())
-                    .forEach(houses::remove);
-            return "Команда успешно выполнена. ";
+            synchronized (getManager().getHouses()) {
+                getManager().getHouses().keySet().stream()
+                        .filter(key_in -> {
+                            try {
+                                PreparedStatement finalStatement = connection.prepareStatement("SELECT * FROM flats WHERE key = ?");
+                                finalStatement.setInt(1, key_in);
+                                ResultSet rs = finalStatement.executeQuery();
+                                return !rs.next();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                return true;
+                            }
+                        })
+                        .collect(Collectors.toSet())
+                        .forEach(getManager().getHouses()::remove);
+                return "Команда успешно выполнена. ";
+            }
         }catch (SQLException e) {
             return("В коллекции не найдено вашей недвижимости.");
         }

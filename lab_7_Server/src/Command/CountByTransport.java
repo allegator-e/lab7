@@ -14,15 +14,13 @@ public class CountByTransport extends Command {
     }
 
     @Override
-    public synchronized String execute(Object args) {
-        TreeMap<Integer, Flat> houses = getManager().getHouses();
+    public String execute(Object args) {
         Transport transport = (Transport) args;
-        if (houses.size() != 0) {
+        if (getManager().getHouses().size() != 0)
             return "Количество элементов, значение поля transport которых равно " + transport + ": " +
-                    houses.values().parallelStream()
+                    getManager().getHouses().values().stream()
                     .filter(flat -> flat.getTransport().equals(transport))
                     .count();
-            }
         return "В коллекции отсутствуют элементы. Выполнение команды не возможно.";
     }
 }

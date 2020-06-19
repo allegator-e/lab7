@@ -24,7 +24,7 @@ public class TCPServerSender implements Runnable{
     *Отправка данных клиенту
      */
     @Override
-    public void run() {
+    public synchronized void run() {
         try {
             SocketChannel socketChannel = (SocketChannel) key.channel();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -38,8 +38,8 @@ public class TCPServerSender implements Runnable{
             oos.close();
             bos.close();
             buffer.clear();
-            key.cancel();
-        }catch (IOException e) {
+        }catch (Exception e) {
+            e.printStackTrace();
             LOGGER.log(Level.SEVERE, "Ошибка передачи данных" );
         }
     }

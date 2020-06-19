@@ -18,7 +18,7 @@ public class Help extends Command {
     public String execute(Object object)
     {
         return "execute_script: считать и исполнить скрипт из указанного файла. \n" +
-                commands.entrySet().parallelStream()
+                commands.entrySet().stream()
                 .map(command -> command.getKey() + ": " + command.getValue().getDescription())
                 .collect(Collectors.joining("\n"));
     }

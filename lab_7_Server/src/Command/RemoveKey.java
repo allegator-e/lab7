@@ -26,37 +26,38 @@ public class RemoveKey extends Command {
     }
 
     @Override
-    public synchronized String execute(Object args) {
+    public String execute(Object args) {
 
         Integer key = (Integer)args;
-        TreeMap<Integer, Flat> houses = getManager().getHouses();
-        if (houses.size() != 0) {
-            if (houses.keySet().parallelStream().anyMatch(key_in_collection -> key_in_collection.equals(key))) {
-                try {
-                    PreparedStatement get_UserId = connection.prepareStatement("SELECT id FROM users WHERE login = ?");
-                    get_UserId.setString(1, login_and_password.get(0));
-                    ResultSet resultSet = get_UserId.executeQuery();
-                    resultSet.next();
-                    int user_id = resultSet.getInt("id");
-                    PreparedStatement statement = connection.prepareStatement("SELECT user_id FROM flats WHERE key = ?");
-                    statement.setInt(1, key);
-                    resultSet = statement.executeQuery();
-                    resultSet.next();
-                    if (user_id == resultSet.getInt("user_id")) {
-                        statement = connection.prepareStatement("DELETE FROM flats WHERE key = ?");
-                        statement.setInt(1,key);
-                        statement.execute();
-                        houses.keySet().parallelStream()
-                                .filter(key_in_collection -> key_in_collection.equals(key))
-                                .collect(Collectors.toSet())
-                                .forEach(houses::remove);
-                        return "Команда успешно выполнена.";
-                    } else return "Элемент не принадлежит вам! Фу как не культурно изменять объекты других!!";
-                }catch (SQLException e) {
-                    return("В коллекции не найдено ваших избушек с такими ключами.");
+        synchronized (getManager().getHouses()) {
+            if (getManager().getHouses().size() != 0) {
+                if (getManager().getHouses().keySet().stream().anyMatch(key_in_collection -> key_in_collection.equals(key))) {
+                    try {
+                        PreparedStatement get_UserId = connection.prepareStatement("SELECT id FROM users WHERE login = ?");
+                        get_UserId.setString(1, login_and_password.get(0));
+                        ResultSet resultSet = get_UserId.executeQuery();
+                        resultSet.next();
+                        int user_id = resultSet.getInt("id");
+                        PreparedStatement statement = connection.prepareStatement("SELECT user_id FROM flats WHERE key = ?");
+                        statement.setInt(1, key);
+                        resultSet = statement.executeQuery();
+                        resultSet.next();
+                        if (user_id == resultSet.getInt("user_id")) {
+                            statement = connection.prepareStatement("DELETE FROM flats WHERE key = ?");
+                            statement.setInt(1, key);
+                            statement.execute();
+                            getManager().getHouses().keySet().stream()
+                                    .filter(key_in_collection -> key_in_collection.equals(key))
+                                    .collect(Collectors.toSet())
+                                    .forEach(getManager().getHouses()::remove);
+                            return "Команда успешно выполнена.";
+                        } else return "Элемент не принадлежит вам! Фу как не культурно изменять объекты других!!";
+                    } catch (SQLException e) {
+                        return ("В коллекции не найдено ваших избушек с такими ключами.");
+                    }
                 }
-            }
-            return("В коллекции не найдено ваших избушек с такими ключами.");
-        } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+                return ("В коллекции не найдено ваших избушек с такими ключами.");
+            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+        }
     }
 }

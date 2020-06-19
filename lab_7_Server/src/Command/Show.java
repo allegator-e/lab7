@@ -20,17 +20,14 @@ public class Show extends Command {
     }
 
     @Override
-    public synchronized String execute(Object args) {
-        TreeMap<Integer, Flat> houses = getManager().getHouses();
-        String s = "";
-        if (houses.size() != 0) {
-            List<Map.Entry<Integer, Flat>> list = houses.entrySet().parallelStream()
+    public String execute(Object args) {
+        if (getManager().getHouses().size() != 0) {
+            List<Map.Entry<Integer, Flat>> list = getManager().getHouses().entrySet().parallelStream()
                     .sorted(Comparator.comparing(element -> (element.getValue().getName())))
                     .collect(Collectors.toList());
             return   list.parallelStream()
                     .map(element -> "key: " + element.getKey() + ", flat: " + element.getValue())
                     .collect(Collectors.joining("\n\n"));
-        }
-        else return "В коллекции отсутствуют элементы. Выполнение команды невозможно.";
+        } else return "В коллекции отсутствуют элементы. Выполнение команды невозможно.";
     }
 }
