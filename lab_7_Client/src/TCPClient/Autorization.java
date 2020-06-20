@@ -22,10 +22,11 @@ public class Autorization {
     }
 
     public ArrayList<String> access() throws IOException {
-        System.out.print("Для регистрации введите reg, для входа - что-нибудь: ");
-        String[] reg = console.readLine().trim().split(" ");
+        String[] reg;
         String login, passwd;
         while (!access) {
+            System.out.print("Для регистрации введите reg, для входа - что-нибудь: ");
+            reg = console.readLine().trim().split(" ");
             login_and_password.clear();
             System.out.print("Логин: ");
             login = console.readLine();

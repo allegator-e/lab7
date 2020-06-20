@@ -55,7 +55,6 @@ public class ServerAutorization {
                     statement.setString(2, password_plus);
                     statement.setString(3, salt);
                     statement.execute();
-                    access = true;
                     answer = "Вы успешно зарегестрировались! Выполнен вход в систему";
                 } else answer = "Пользователь с таким логином уже существует. Введите данные снова:";
             } else {
