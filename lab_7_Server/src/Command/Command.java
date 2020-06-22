@@ -1,6 +1,6 @@
 package Command;
 
-import TCPServer.CollectionManager;
+import TCPServer.*;
 
 /**
  * Класс, от которого наследуются классы всех команд
@@ -13,9 +13,7 @@ public abstract class Command {
     {
         this.manager=manager;
     }
-    public String execute(Object args){
-        return "Пропущен аргумент.";
-    }
+    public String execute(Object args){ return "Пропущен аргумент."; }
     public void setDescription(String description)
     {
         this.description=description;

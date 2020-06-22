@@ -1,75 +1,222 @@
 package TCPServer;
 
 import Object.*;
-import java.sql.*;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.logging.*;
-import java.time.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CollectionManager {
     private final TreeMap<Integer, Flat> houses = new TreeMap<>();
-    private Connection connection;
     private Date initDate;
-    static Logger LOGGER;
-    static {
+    private InteractionBD interactionBD;
+    private Logger LOGGER;
+    {
         LOGGER = Logger.getLogger(CollectionManager.class.getName());
     }
 
-    public CollectionManager(Connection connection)  {
-        this.connection = connection;
-        this.load();
+    public CollectionManager(InteractionBD interactionBD) {
+        this.interactionBD = interactionBD;
         this.initDate = new Date();
+        this.load();
     }
-
-    public TreeMap<Integer, Flat> getHouses(){
-        return houses;
-    }
-
 
     /**
      *  Полуение элементов коллекции из БД в локальную коллекцию.
      */
+
     public void load() {
         int beginSize = houses.size();
         LOGGER.log(Level.INFO, "Идёт загрузка коллекции ");
-        try  {
-            //System.out.println(stat.execute("DELETE FROM users *"));
-            //System.out.println(stat.execute("CREATE SEQUENCE sequence_id"));
-            //System.out.println(stat.execute("DROP TABLE flats"));
-            //System.out.println(stat.execute("CREATE TABLE flats (key INT UNIQUE , id INT PRIMARY KEY, name VARCHAR(256) NOT NULL, Coordinates_x FLOAT, Coordinates_y INT, creationDate TIMESTAMP, numberOfRooms INT, furnish VARCHAR(10), view VARCHAR(10), transport VARCHAR(10) NOT NULL, House_name VARCHAR(256) NOT NULL, House_year INT, House_numberOfFloors INT, House_numberOfFlatsOnFloor INT, user_id INT REFERENCES users (id))"));
-            //System.out.println(stat.execute("INSERT INTO users VALUES(nextval('sequence_user_id'), 'Luna', '1234', 'ophtj')"));
-            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM flats");
-            while (resultSet.next()) {
-                Integer key = resultSet.getInt("key");
-                Integer id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                float x = resultSet.getFloat("Coordinates_x");
-                long y = resultSet.getInt("Coordinates_y");
-                LocalDateTime creationDate = resultSet.getTimestamp("creationDate").toLocalDateTime();
-                long area = resultSet.getInt("area");
-                Integer numberOfRooms = resultSet.getInt("numberOfRooms");
-                Furnish furnish = null;
-                String furnish_s = resultSet.getString("furnish");
-                if (!furnish_s.equals("null")) furnish = Furnish.valueOf(furnish_s);
-                View view = null;
-                String view_s = resultSet.getString("view");
-                if (!view_s.equals("null")) view = View.valueOf(view_s);
-                Transport transport = Transport.valueOf(resultSet.getString("transport"));
-                String nameHouse = resultSet.getString("House_name");
-                int year = resultSet.getInt("House_year");
-                int numberOfFloors = resultSet.getInt("House_numberOfFloors");
-                long numberOfFlatsOnFloor = resultSet.getInt("House_numberOfFlatsOnFloor");
-                houses.put(key, new Flat(id, name, new Coordinates(x, y), creationDate, area, numberOfRooms, furnish, view, transport, new House(nameHouse, year, numberOfFloors, numberOfFlatsOnFloor)));
-            }
-            resultSet.close();
-            LOGGER.log(Level.INFO, "Коллекция успешно загружена. Добавлено " + (houses.size() - beginSize) + " элементов.");
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Коллекция не может быть загружена. Файл некорректен");
-            System.exit(1);
+        //TreeMap<Integer, Flat> houses1 = interactionBD.load();
+        //System.out.println(houses1.size());
+        houses.putAll(interactionBD.load());
+        LOGGER.log(Level.INFO, "Коллекция успешно загружена. Добавлено " + (houses.size() - beginSize) + " элементов.");
+    }
+
+    /**
+     * Методы для выполнеия команд
+     */
+
+    public String averageOfNumberOfRooms() {
+        synchronized (houses) {
+            if (houses.size() != 0)
+                return "Среднее значение поля numberOfRooms для всех элементов коллекции: " + houses.values().stream()
+                        .mapToInt(flat -> flat.getNumberOfRooms())
+                        .average().getAsDouble();
+            return "В коллекции отсутствуют элементы. Выполнение команды не возможно.";
         }
     }
 
+    public String clear(String login) {
+        synchronized (houses) {
+            try {
+                ArrayList<Integer> keys = interactionBD.clear(login);
+                houses.keySet().stream()
+                        .filter(keys::contains)
+                        .collect(Collectors.toSet())
+                        .forEach(houses::remove);
+                return "Команда успешно выполнена. ";
+            } catch (SQLException e) {
+                return ("В коллекции не найдено вашей недвижимости.");
+            }
+        }
+    }
+
+    public String countByTransport(Transport transport) {
+        synchronized (houses) {
+            if (houses.size() != 0)
+                return "Количество элементов, значение поля transport которых равно " + transport + ": " +
+                        houses.values().stream()
+                                .filter(flat -> flat.getTransport().equals(transport))
+                                .count();
+            return "В коллекции отсутствуют элементы. Выполнение команды не возможно.";
+        }
+    }
+
+    public String groupCountingByCreationDate() {
+        synchronized (houses) {
+            if (houses.size() != 0) {
+                Map<LocalDateTime, Long> creationDates = houses.values().stream()
+                        .collect(Collectors.groupingBy(Flat::getCreationDate, Collectors.counting()));
+                return creationDates.keySet().stream()
+                        .map(date -> date + ": " + creationDates.get(date))
+                        .collect(Collectors.joining("\n"));
+            }
+            return "В коллекции отсутствуют элементы. Выполнение команды не возможно.";
+        }
+    }
+
+    public String insert(Integer key, Flat flat, String login) {
+        synchronized (houses) {
+            try {
+                if (houses.containsKey(key))
+                    return "Вы зачем такой ключ написали? Такой уже есть в коллекции...";
+                interactionBD.insert(key, flat, login);
+                houses.put(key, flat);
+                return "Элемент добавлен.";
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "Чё-то не получилось, чё-то не считалось... Сорян, ну чё";
+            }
+        }
+    }
+
+    public String removeGreater(Flat flat, String login) {
+        synchronized (houses) {
+            if (houses.size() != 0) {
+                try {
+                    ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
+                    if (keys.stream().anyMatch(key -> houses.get(key).compareTo(flat) > 0)) {
+                        keys.stream()
+                                .filter(key -> houses.get(key).compareTo(flat) > 0)
+                                .peek(key -> {
+                                    try {
+                                        interactionBD.removeKey(key);
+                                    } catch (SQLException ignored) {
+                                    }
+                                })
+                                .collect(Collectors.toSet())
+                                .forEach(houses::remove);
+                        return "Команда успешно выполнена.";
+                    }
+                } catch (SQLException e) {
+                    return ("В коллекции не найдено усадьб с соответствующими значениями.");
+                }
+                return ("В коллекции не найдено усадьб с с соответствующими значениями.");
+            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+        }
+    }
+
+    public String removeGreaterKey(Integer key, String login) {
+        synchronized (houses) {
+            if (houses.size() != 0) {
+                try {
+                    ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
+                    if (keys.stream().anyMatch(keyInCollection -> keyInCollection.compareTo(key) > 0)) {
+                        keys.stream()
+                                .filter(keyInCollection -> keyInCollection.compareTo(key) > 0)
+                                .peek(keyInCollection -> {
+                                    try {
+                                        interactionBD.removeKey(keyInCollection);
+                                    } catch (SQLException ignored) {
+                                    }
+                                })
+                                .collect(Collectors.toSet())
+                                .forEach(houses::remove);
+                        return "Команда успешно выполнена.";
+                    }
+                } catch (SQLException e) {
+                    return ("В коллекции не найдено ваших хором с этими ключами.");
+                }
+                return ("В коллекции не найдено ваших хором с этими ключами.");
+            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+        }
+    }
+
+    public String removeKey(Integer key, String login) {
+        synchronized (houses) {
+            if (houses.size() != 0) {
+                try {
+                    if (houses.containsKey(key)) {
+                        ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
+                        if (keys.contains(key)) {
+                            interactionBD.removeKey(key);
+                            houses.remove(key);
+                            return "Элемент успешно удален.";
+                        } else return "Элемент не принадлежит вам! Фу как не культурно изменять объекты других!!";
+                    }
+                    return ("В коллекции не найдено ваших избушек с такими ключами.");
+                } catch (SQLException e) {
+                    return "Упс...";
+                }
+            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+        }
+    }
+
+    public String show(){
+        synchronized (houses) {
+            if (houses.size() != 0) {
+                List<Map.Entry<Integer, Flat>> list = houses.entrySet().stream()
+                        .sorted(Comparator.comparing(element -> (element.getValue().getName())))
+                        .collect(Collectors.toList());
+                return list.stream()
+                        .map(element -> "key: " + element.getKey() + ", flat: " + element.getValue())
+                        .collect(Collectors.joining("\n\n"));
+            } else return "В коллекции отсутствуют элементы. Выполнение команды невозможно.";
+        }
+    }
+
+    public String update(Integer id, Flat flat, String login) {
+        synchronized (houses) {
+            if (houses.size() != 0) {
+                if (houses.keySet().stream().anyMatch(key -> houses.get(key).getId().equals(id))) {
+                    try {
+                        ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
+                        if (keys.stream().anyMatch(key -> houses.get(key).getId().equals(id))) {
+                            try {
+                                interactionBD.update(id, flat, login);
+                                flat.setId(id);
+                                houses.keySet().stream()
+                                        .filter(key -> houses.get(key).getId().equals(id))
+                                        .forEach(key -> houses.replace(key, flat));
+                                return "Элемент коллекции успешно обновлен.";
+                            } catch (SQLException e) {
+                                System.out.println("1");
+                                e.printStackTrace();
+                            }
+                        } else return "Фу, как не культурно менять чужие элементы!";
+                    }catch(SQLException e){
+                        System.out.println(2);
+                        e.printStackTrace();
+                    }
+                    return null;
+                } else return ("Элеметов с таким ай-ди в коллекции нет.");
+            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
+        }
+    }
     /**
      * Выводит информацию о коллекции.
      */

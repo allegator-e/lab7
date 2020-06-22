@@ -1,12 +1,12 @@
 package Command;
 
 import TCPServer.CollectionManager;
-
 import java.util.ArrayList;
 
 /**
  * вывести последние 9 команд (без их аргументов).
  */
+
 public class History extends Command {
     public History(CollectionManager manager) {
         super(manager);
@@ -20,5 +20,4 @@ public class History extends Command {
                 return String.join("\n", history);
         return "";
     }
-
 }

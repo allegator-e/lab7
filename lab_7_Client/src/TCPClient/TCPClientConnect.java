@@ -1,10 +1,6 @@
 package TCPClient;
+
 import java.io.IOException;
-
-import java.net.InetSocketAddress;
-
-import java.net.Socket;
-import java.net.SocketAddress;
 import java.nio.channels.UnresolvedAddressException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -34,11 +30,11 @@ public class TCPClientConnect {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Работа программы завершена!")));
 
             Autorization autorization = new Autorization(hostName, port);
-            ArrayList<String> login_and_password = autorization.access();
+            ArrayList<String> loginAndPassword = autorization.access();
             String[] command;
             while (true) {
                 try {
-                    TCPSender sender = new TCPSender(hostName, port, true, login_and_password);
+                    TCPSender sender = new TCPSender(hostName, port, true, loginAndPassword);
                     System.out.print(">>");
                     command = commandReader.nextLine().trim().split(" ");
                     if (command[0].equals("exit")) {

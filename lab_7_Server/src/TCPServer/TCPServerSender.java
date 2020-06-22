@@ -10,8 +10,8 @@ public class TCPServerSender implements Runnable{
     private String str;
     private SelectionKey key;
     private boolean access;
-    static Logger LOGGER;
-    static {
+    private Logger LOGGER;
+    {
         LOGGER = Logger.getLogger(TCPServerSender.class.getName());
     }
     public TCPServerSender(boolean access, String str, SelectionKey key) {
@@ -24,7 +24,7 @@ public class TCPServerSender implements Runnable{
     *Отправка данных клиенту
      */
     @Override
-    public synchronized void run() {
+    public void run() {
         try {
             SocketChannel socketChannel = (SocketChannel) key.channel();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();

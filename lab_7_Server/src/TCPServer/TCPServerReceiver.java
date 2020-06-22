@@ -1,35 +1,33 @@
 package TCPServer;
 
-import Command.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Command.*;
 
 public class TCPServerReceiver implements Runnable {
     private Logger LOGGER = Logger.getLogger(TCPServerReceiver.class.getName());
-    private ArrayList<String> history;
+    private final ArrayList<String> history;
     private CollectionManager serverCollection;
     private HashMap<String, Command> availableCommands = new HashMap<>();
-    private Connection connection;
     private ForkJoinPool forkJoinPool;
     private SelectionKey key;
     private Object o;
     private ByteBuffer buffer = ByteBuffer.allocate(4096);
+    private InteractionBD interactionBD;
 
-    public TCPServerReceiver(SelectionKey key, Connection connection, CollectionManager serverCollection, ArrayList<String> history, ForkJoinPool forkJoinPool) {
+    public TCPServerReceiver(SelectionKey key, InteractionBD interactionBD, CollectionManager serverCollection, ArrayList<String> history, ForkJoinPool forkJoinPool) {
         this.key =key;
-        this.connection = connection;
+        this.interactionBD = interactionBD;
         this.history = history;
         this.serverCollection = serverCollection;
         this.forkJoinPool = forkJoinPool;
@@ -61,17 +59,17 @@ public class TCPServerReceiver implements Runnable {
     private void treatment() {
         String str;
         int argument =0;
-        ArrayList<Object> list_object = (ArrayList<Object>) o;
-        boolean access = (Boolean) list_object.get(0);
-        ArrayList<String> login_and_password = (ArrayList<String>) list_object.get(1);
-        String command = (String) list_object.get(2);
-        Object object = list_object.get(3);
+        ArrayList<Object> listObject = (ArrayList<Object>) o;
+        boolean access = (Boolean) listObject.get(0);
+        ArrayList<String> loginAndPassword = (ArrayList<String>) listObject.get(1);
+        String command = (String) listObject.get(2);
+        Object object = listObject.get(3);
         if (!access) {
-            ServerAutorization serverAutorization = new ServerAutorization(connection, login_and_password, command);
+            ServerAutorization serverAutorization = new ServerAutorization(loginAndPassword, command, interactionBD);
             access = serverAutorization.access();
             str = serverAutorization.getAnswer();
         } else {
-            ServerAutorization user = new ServerAutorization(connection, login_and_password, "login");
+            ServerAutorization user = new ServerAutorization(loginAndPassword, "login", interactionBD);
             if (access = user.access()) {
                 LOGGER.log(Level.FINE, "Получена команда" + command);
                 String[] parseCommand = command.trim().split(" ", 2);
@@ -80,15 +78,15 @@ public class TCPServerReceiver implements Runnable {
                     argument = Integer.parseInt(parseCommand[1]);
                 }
                 availableCommands.put("help", new Help(serverCollection, availableCommands));
-                availableCommands.put("insert", new Insert(serverCollection, argument, connection, login_and_password));
+                availableCommands.put("insert", new Insert(serverCollection, argument, loginAndPassword));
                 availableCommands.put("info", new Info(serverCollection));
-                availableCommands.put("clear", new Clear(serverCollection, connection, login_and_password));
+                availableCommands.put("clear", new Clear(serverCollection, loginAndPassword));
                 availableCommands.put("show", new Show(serverCollection));
-                availableCommands.put("update_id", new Update(serverCollection, argument, connection, login_and_password));
-                availableCommands.put("remove_greater", new RemoveGreater(serverCollection, connection, login_and_password));
+                availableCommands.put("update_id", new Update(serverCollection, argument, loginAndPassword));
+                availableCommands.put("remove_greater", new RemoveGreater(serverCollection, loginAndPassword));
                 availableCommands.put("history", new History(serverCollection));
-                availableCommands.put("remove_key", new RemoveKey(serverCollection, connection, login_and_password));
-                availableCommands.put("remove_greater_key", new RemoveGreaterKey(serverCollection, connection, login_and_password));
+                availableCommands.put("remove_key", new RemoveKey(serverCollection, loginAndPassword));
+                availableCommands.put("remove_greater_key", new RemoveGreaterKey(serverCollection, loginAndPassword));
                 availableCommands.put("average_of_number_of_rooms", new AverageOfNumberOfRooms(serverCollection));
                 availableCommands.put("group_counting_by_creation_date", new GroupCountingByCreationDate(serverCollection));
                 availableCommands.put("count_by_transport", new CountByTransport(serverCollection));
