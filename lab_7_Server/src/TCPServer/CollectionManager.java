@@ -51,17 +51,17 @@ public class CollectionManager {
     }
 
     public String clear(String login) {
-        synchronized (houses) {
-            try {
-                ArrayList<Integer> keys = interactionBD.clear(login);
+        try {
+            ArrayList<Integer> keys = interactionBD.clear(login);
+            synchronized (houses) {
                 houses.keySet().stream()
                         .filter(keys::contains)
                         .collect(Collectors.toSet())
                         .forEach(houses::remove);
-                return "Команда успешно выполнена. ";
-            } catch (SQLException e) {
-                return ("В коллекции не найдено вашей недвижимости.");
             }
+            return "Команда успешно выполнена. ";
+        } catch (SQLException e) {
+            return ("В коллекции не найдено вашей недвижимости.");
         }
     }
 
@@ -90,90 +90,82 @@ public class CollectionManager {
     }
 
     public String insert(Integer key, Flat flat, String login) {
-        synchronized (houses) {
-            try {
+        try {
+            synchronized (houses) {
                 if (houses.containsKey(key))
                     return "Вы зачем такой ключ написали? Такой уже есть в коллекции...";
-                interactionBD.insert(key, flat, login);
                 houses.put(key, flat);
-                return "Элемент добавлен.";
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return "Чё-то не получилось, чё-то не считалось... Сорян, ну чё";
             }
+            interactionBD.insert(key, flat, login);
+            return "Элемент добавлен.";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Чё-то не получилось, чё-то не считалось... Сорян, ну чё";
         }
     }
 
     public String removeGreater(Flat flat, String login) {
-        synchronized (houses) {
             if (houses.size() != 0) {
                 try {
+                    Set<Integer> keysToRemove;
                     ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
-                    if (keys.stream().anyMatch(key -> houses.get(key).compareTo(flat) > 0)) {
-                        keys.stream()
+                    synchronized (houses) {
+                        keysToRemove = keys.stream()
                                 .filter(key -> houses.get(key).compareTo(flat) > 0)
-                                .peek(key -> {
-                                    try {
-                                        interactionBD.removeKey(key);
-                                    } catch (SQLException ignored) {
-                                    }
-                                })
-                                .collect(Collectors.toSet())
-                                .forEach(houses::remove);
-                        return "Команда успешно выполнена.";
+                                .collect(Collectors.toSet());
+                        keysToRemove.forEach(houses::remove);
                     }
+                    interactionBD.removeKeys(keysToRemove);
+                    if(keysToRemove.size() > 0)
+                        return "Команда успешно выполнена.";
+                    else
+                        return ("В коллекции не найдено ваших усадьб с соответствующими значениями.");
                 } catch (SQLException e) {
-                    return ("В коллекции не найдено усадьб с соответствующими значениями.");
+                    return ("В коллекции не найдено ващих усадьб с соответствующими значениями.");
                 }
-                return ("В коллекции не найдено усадьб с с соответствующими значениями.");
             } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
-        }
     }
 
     public String removeGreaterKey(Integer key, String login) {
-        synchronized (houses) {
-            if (houses.size() != 0) {
-                try {
-                    ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
-                    if (keys.stream().anyMatch(keyInCollection -> keyInCollection.compareTo(key) > 0)) {
-                        keys.stream()
-                                .filter(keyInCollection -> keyInCollection.compareTo(key) > 0)
-                                .peek(keyInCollection -> {
-                                    try {
-                                        interactionBD.removeKey(keyInCollection);
-                                    } catch (SQLException ignored) {
-                                    }
-                                })
-                                .collect(Collectors.toSet())
-                                .forEach(houses::remove);
-                        return "Команда успешно выполнена.";
-                    }
-                } catch (SQLException e) {
-                    return ("В коллекции не найдено ваших хором с этими ключами.");
+        if (houses.size() != 0) {
+            try {
+                Set<Integer> keysToRemove;
+                ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
+                synchronized (houses) {
+                    keysToRemove = keys.stream()
+                            .filter(keyInCollection -> keyInCollection.compareTo(key) > 0)
+                            .collect(Collectors.toSet());
+                    keysToRemove.forEach(houses::remove);
                 }
+                interactionBD.removeKeys(keysToRemove);
+                if(keysToRemove.size() > 0)
+                    return "Команда успешно выполнена.";
+                else
+                    return "В коллекции не найдено ваших хором с этими ключами.";
+            } catch (SQLException e) {
                 return ("В коллекции не найдено ваших хором с этими ключами.");
-            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
-        }
+            }
+        } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
     }
 
     public String removeKey(Integer key, String login) {
-        synchronized (houses) {
-            if (houses.size() != 0) {
-                try {
-                    if (houses.containsKey(key)) {
-                        ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
-                        if (keys.contains(key)) {
-                            interactionBD.removeKey(key);
+        if (houses.size() != 0) {
+            try {
+                if (houses.containsKey(key)) {
+                    ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
+                    if (keys.contains(key)) {
+                        interactionBD.removeKey(key);
+                        synchronized (houses) {
                             houses.remove(key);
-                            return "Элемент успешно удален.";
-                        } else return "Элемент не принадлежит вам! Фу как не культурно изменять объекты других!!";
-                    }
-                    return ("В коллекции не найдено ваших избушек с такими ключами.");
-                } catch (SQLException e) {
-                    return "Упс...";
+                        }
+                        return "Элемент успешно удален.";
+                    } else return "Элемент не принадлежит вам! Фу как не культурно изменять объекты других!!";
                 }
-            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
-        }
+                return ("В коллекции не найдено ваших избушек с такими ключами.");
+            } catch (SQLException e) {
+                return "Упс...";
+            }
+        } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
     }
 
     public String show(){
@@ -190,32 +182,29 @@ public class CollectionManager {
     }
 
     public String update(Integer id, Flat flat, String login) {
-        synchronized (houses) {
-            if (houses.size() != 0) {
-                if (houses.keySet().stream().anyMatch(key -> houses.get(key).getId().equals(id))) {
-                    try {
-                        ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
-                        if (keys.stream().anyMatch(key -> houses.get(key).getId().equals(id))) {
-                            try {
-                                interactionBD.update(id, flat, login);
-                                flat.setId(id);
-                                houses.keySet().stream()
-                                        .filter(key -> houses.get(key).getId().equals(id))
-                                        .forEach(key -> houses.replace(key, flat));
-                                return "Элемент коллекции успешно обновлен.";
-                            } catch (SQLException e) {
-                                System.out.println("1");
-                                e.printStackTrace();
-                            }
-                        } else return "Фу, как не культурно менять чужие элементы!";
-                    }catch(SQLException e){
-                        System.out.println(2);
-                        e.printStackTrace();
+        if (houses.size() != 0) {
+            try {
+                ArrayList<Integer> keys = new ArrayList<>(interactionBD.selectYourKeys(login));
+                try {
+                    interactionBD.update(id, flat, login);
+                    synchronized (houses) {
+                        flat.setId(id);
+                        Set<Integer> keyToUpdate = keys.stream()
+                                .filter(key -> houses.get(key).getId().equals(id))
+                                .collect(Collectors.toSet());
+                        keyToUpdate.forEach(key -> houses.replace(key, flat));
+                        if(keyToUpdate.size() > 0)
+                            return "Элемент коллекции успешно обновлен.";
+                        else
+                            return "Фу, как не культурно менять чужие элементы!";
                     }
-                    return null;
-                } else return ("Элеметов с таким ай-ди в коллекции нет.");
-            } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
-        }
+                } catch (SQLException e) {
+                    return "В коллекции нет элементов с соответствующими ключами";
+                }
+            } catch (SQLException e) {
+                return "В коллекции нет элементов с соответствующими ключами";
+            }
+        } else return ("В коллекции отсутствуют элементы. Выполнение команды не возможно.");
     }
     /**
      * Выводит информацию о коллекции.
